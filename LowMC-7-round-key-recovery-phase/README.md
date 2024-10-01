@@ -1,3 +1,0 @@
-In this code, we set secret key a vector with all bits are 1 and check whether equations are correct by substituting the values of the key into the equations.
-All equations are saved to a file, and you can modify the file path according to your specific situation.
-You can check that degree of all the equations is 7, which is consistent with the description in our paper."
