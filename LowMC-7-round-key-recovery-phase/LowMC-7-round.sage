@@ -160,11 +160,19 @@ def print_poly(poly):
     for i in range(len(poly)):
         print("poly{}:={}:".format(i,poly[i]))
 
+term_map={}
+def get_coef(term_list):
+    result=[0 for _ in range(56)]
+    for i in range(len(term_list)):
+        index=term_map[term_list[i][1]]
+        result[index]=term_list[i][0]
+    return result
+
 if __name__ == "__main__":
     #Arg generation
     F=GF(2)#field
-    n=21  #blocksize
-    r=7    #number of rounds
+    n=15  #blocksize
+    r=5    #number of rounds
     K=PolynomialRing(F,n/3,'k') #Polynomial ring
     k=K.gens()  #Variates
     encrypt_mat_array,keygen_mat_array,round_constant_array=create_affine_layers(F,n,r)
@@ -178,3 +186,37 @@ if __name__ == "__main__":
             f.write(f"{polynomial}\n")
 #     print_poly(poly)
     test_poly(poly,key)
+    
+    #test independence
+    k0=k[0]
+    k1=k[1]
+    k2=k[2]
+    k3=k[3]
+    k4=k[4]
+    term_map={1:0,k0:1,k1:2,k2:3,k3:4,k4:5,
+         k0**2:6,k0*k1:7,k0*k2:8,k0*k3:9,k0*k4:10,
+         k1**2:11,k1*k2:12,k1*k3:13,k1*k4:14,
+         k2**2:15,k2*k3:16,k2*k4:17,
+         k3**2:18,k3*k4:19,
+         k4**2:20,
+         k0**3:21,k0**2*k1:22,k0**2*k2:23,k0**2*k3:24,k0**2*k4:25,
+         k0*k1**2:26,k0*k1*k2:27,k0*k1*k3:28,k0*k1*k4:29,
+         k0*k2**2:30,k0*k2*k3:31,k0*k2*k4:32,
+         k0*k3**2:33,k0*k3*k4:34,
+         k0*k4**2:35,
+         k1**3:36,k1**2*k2:37,k1**2*k3:38,k1**2*k4:39,
+         k1*k2**2:40,k1*k2*k3:41,k1*k2*k4:42,
+         k1*k3**2:43,k1*k3*k4:44,
+         k1*k4**2:45,
+         k2**3:46,k2**2*k3:47,k2**2*k4:48,
+         k2*k3**2:49,k2*k3*k4:50,
+         k2*k4**2:51,
+         k3**3:52,k3**2*k4:53,
+         k3*k4**2:54,
+         k4**3:55}
+    mat=[]
+    for ele in poly:
+        mat.append(get_coef(list(ele)))
+    mat=Matrix(F,mat)
+    if mat.rank()==n:
+        print("Rank is {},polynomials are linearly independent".format(n))
