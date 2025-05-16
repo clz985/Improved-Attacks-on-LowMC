@@ -1,7 +1,7 @@
-This code is used to verify equations degree of LowMC-7-round-key-recovery-phase
+This code is used to verify equations degree of LowMC-5-round-key-recovery-phase
 
 In this code, we set secret key a vector with all bits are 1 and check whether equations are correct by substituting the values of the key into the equations.
 
 All equations are saved to a file, and you can modify the file path according to your specific situation.
 
-You can check that degree of all the equations is 7, which is consistent with the description in our paper."
+You can check that degree of all the equations is 3, which is consistent with the description in our paper."
